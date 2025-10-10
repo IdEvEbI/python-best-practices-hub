@@ -74,3 +74,37 @@ exclude = [
     "__pycache__/",
     ".pytest_cache/",
 ]
+
+# Radon 代码复杂度分析配置
+[tool.radon]
+# 排除的目录
+exclude = [
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    "__pycache__",
+    ".pytest_cache",
+    "tests",
+]
+
+# 最小复杂度显示
+min = "A"
+
+# 最大复杂度显示
+max = "F"
+
+# 显示复杂度分数
+show_complexity = true
+
+# 显示平均复杂度
+total_average = true
+
+# 输出格式
+output_format = "text"
+
+# 包含 Jupyter 笔记本
+include_ipynb = false
+
+# Jupyter 单元格分析
+ipynb_cells = false
