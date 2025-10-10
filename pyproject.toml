@@ -108,3 +108,41 @@ include_ipynb = false
 
 # Jupyter 单元格分析
 ipynb_cells = false
+
+# Vulture 死代码检测配置
+[tool.vulture]
+# 排除的路径模式
+exclude = [
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    "__pycache__",
+    ".pytest_cache",
+    "tests",
+]
+
+# 忽略的装饰器
+ignore_decorators = [
+    "@app.route",
+    "@require_*",
+    "@pytest.fixture",
+    "@click.command",
+]
+
+# 忽略的名称模式
+ignore_names = [
+    "visit_*",
+    "do_*",
+    "test_*",
+    "_*",
+]
+
+# 最小置信度
+min_confidence = 80
+
+# 按大小排序
+sort_by_size = true
+
+# 详细输出
+verbose = false
