@@ -12,7 +12,7 @@ Markdownlint 是 Node.js 生态中的 Markdown 文档质量检查工具，通过
 
 ```bash
 # 项目本地安装（推荐）
-npm install --save-dev markdownlint-cli
+pnpm add -D markdownlint-cli
 
 # 检查单个文件
 markdownlint README.md
@@ -59,7 +59,19 @@ markdownlint --fix "**/*.md"            # 自动修复可修复的问题
   "MD041": false,
   "MD036": false,
   "MD040": false,
-  "MD051": false
+  "MD051": false,
+  "MD029": {
+    "style": "ordered"
+  },
+  "MD024": {
+    "siblings_only": true
+  },
+  "MD007": {
+    "indent": 2
+  },
+  "MD012": {
+    "maximum": 1
+  }
 }
 ```
 
@@ -79,8 +91,18 @@ markdownlint --fix "**/*.md"            # 自动修复可修复的问题
 // .markdownlint.json - JSON 格式（推荐）
 {
   "default": true,
-  "MD013": { "line_length": 200 },
-  "MD033": { "allowed_elements": ["details", "summary"] }
+  "MD013": {
+    "line_length": 200,
+    "code_blocks": false,
+    "tables": false
+  },
+  "MD033": {
+    "allowed_elements": ["details", "summary", "br", "hr"]
+  },
+  "MD029": { "style": "ordered" },
+  "MD024": { "siblings_only": true },
+  "MD007": { "indent": 2 },
+  "MD012": { "maximum": 1 }
 }
 ```
 
@@ -151,10 +173,26 @@ markdownlint --fix "**/*.md"            # 自动修复可修复的问题
 {
   "markdownlint.config": {
     "default": true,
-    "MD013": { "line_length": 200 },
-    "MD033": { "allowed_elements": ["details", "summary", "br", "hr"] }
+    "MD013": {
+      "line_length": 200,
+      "code_blocks": false,
+      "tables": false
+    },
+    "MD033": {
+      "allowed_elements": ["details", "summary", "br", "hr"]
+    },
+    "MD029": { "style": "ordered" },
+    "MD024": { "siblings_only": true },
+    "MD007": { "indent": 2 },
+    "MD012": { "maximum": 1 }
   },
-  "markdownlint.ignore": ["**/node_modules/**", "**/dist/**", "**/build/**"]
+  "markdownlint.ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/venv/**",
+    "**/.venv/**"
+  ]
 }
 ```
 
@@ -191,9 +229,24 @@ jobs:
         with:
           node-version: '18'
       - name: Install markdownlint
-        run: npm install -g markdownlint-cli
+        run: pnpm add -g markdownlint-cli
       - name: Run markdownlint
-        run: markdownlint "**/*.md" --config .markdownlint.json
+        run: markdownlint "**/*.md" --config .markdownlint.json --ignore node_modules --ignore venv --ignore .venv --ignore .git
+```
+
+#### Pre-commit 集成
+
+```yaml
+# .pre-commit-config.yaml
+repos:
+  - repo: local
+    hooks:
+      - id: format-markdown
+        name: Format Markdown
+        entry: pnpm run format
+        language: system
+        files: \.md$
+        pass_filenames: true
 ```
 
 ## 4. 故障排除与问题解决
@@ -226,7 +279,7 @@ markdownlint --config .markdownlint.json --help
 
 ```bash
 # 排除特定文件
-markdownlint "**/*.md" --ignore "**/node_modules/**" --ignore "**/dist/**"
+markdownlint "**/*.md" --ignore "**/node_modules/**" --ignore "**/dist/**" --ignore "**/venv/**" --ignore "**/.venv/**"
 ```
 
 #### 增量检查
@@ -305,40 +358,37 @@ function getCachedRule(ruleName, config) {
 
 ### 5.3 扩展机制
 
-#### 自定义规则开发
+#### 规则扩展原理
 
 ```javascript
-// 自定义规则示例
-function customRule(params, onError) {
-  onError({
-    lineNumber: 1,
-    detail: 'Custom rule violation',
-  })
+// 规则解析流程
+const rules = {
+  MD013: {
+    line_length: 200,
+    code_blocks: false,
+    tables: false,
+  },
 }
 
-module.exports = {
-  names: ['custom-rule'],
-  description: 'Custom rule description',
-  tags: ['custom'],
-  function: customRule,
+// 规则应用逻辑
+function applyRule(ruleName, config, content) {
+  const rule = rules[ruleName]
+  if (!rule) return []
+
+  return rule.check(content, config)
 }
 ```
 
-#### 插件系统
+#### 配置合并策略
 
 ```javascript
-// 插件加载机制
-function loadPlugins(pluginPaths) {
-  return pluginPaths
-    .map((path) => {
-      try {
-        return require(path)
-      } catch (error) {
-        console.warn(`Failed to load plugin: ${path}`)
-        return null
-      }
-    })
-    .filter(Boolean)
+// 配置合并逻辑
+function mergeConfigs(defaultConfig, fileConfig, cliConfig) {
+  return {
+    ...defaultConfig,
+    ...fileConfig,
+    ...cliConfig,
+  }
 }
 ```
 
