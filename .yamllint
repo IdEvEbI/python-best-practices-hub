@@ -1,0 +1,48 @@
+# .yamllint
+extends: default
+
+rules:
+  # 行长度限制
+  line-length:
+    max: 200
+    level: warning
+
+  # 缩进设置
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # 注释规范
+  comments:
+    min-spaces-from-content: 1
+
+  # 文档开始标记
+  document-start:
+    present: false
+
+  # 布尔值规范
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off']
+
+  # 空行规范
+  empty-lines:
+    max: 2
+    max-start: 0
+    max-end: 1
+
+  # 键值对规范
+  key-duplicates: enable
+
+  # 括号内空格规范
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+
+ignore: |
+  .github/
+  node_modules/
+  venv/
+  .venv/
+  *.lock
+  pnpm-lock.yaml
