@@ -76,8 +76,8 @@ fi
 
 # 获取版本信息
 VERSION_INFO=$(pip index versions "$PACKAGE_NAME")
-# 使用更灵活的正则表达式匹配各种版本格式
-LATEST_VERSION=$(echo "$VERSION_INFO" | head -1 | grep -oE '[0-9]+(\.[0-9]+)*(?:[a-zA-Z][a-zA-Z0-9\-\.]*)?' | head -1)
+# 使用兼容 ERE 的正则表达式匹配版本格式
+LATEST_VERSION=$(echo "$VERSION_INFO" | head -1 | grep -oE '[0-9]+(\.[0-9]+)*([a-zA-Z][a-zA-Z0-9\-\.]*)?' | head -1)
 
 if [ -z "$LATEST_VERSION" ]; then
     echo -e "${RED}错误: 无法解析最新版本号${NC}"
