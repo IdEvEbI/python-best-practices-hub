@@ -166,3 +166,16 @@ exclude_dirs = [
 
 # 跳过测试文件中的 assert 检查
 skips = ["B101"]
+
+# Commitizen 提交信息规范配置
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.0.0"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true
+annotated_tag = false
+message_template = "chore(release): version $current_version → $new_version"
+commit_message_template = "chore(release): version $current_version → $new_version"
