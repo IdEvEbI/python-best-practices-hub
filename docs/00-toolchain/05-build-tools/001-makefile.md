@@ -90,7 +90,7 @@ test: ## 运行测试
 
 security: ## 运行安全检查
     bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
-    safety check
+    safety scan
 
 quality: ## 运行代码质量分析
     radon cc . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
@@ -203,7 +203,7 @@ ci: ## CI/CD 检查
     mypy .
     pytest
     bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
-    safety check
+    safety scan
     pnpm run format:check
     pnpm run lint:md
 

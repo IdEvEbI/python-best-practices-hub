@@ -25,7 +25,7 @@
 #### 安装和基础使用
 
 ```bash
-# 安装 Safety
+# 安装 Safety CLI 3
 pip install safety
 
 # 扫描当前项目
@@ -35,7 +35,7 @@ safety scan
 safety scan --target /path/to/project
 
 # 扫描 requirements.txt
-safety check -r requirements.txt
+safety scan -r requirements.txt
 
 # 详细输出
 safety scan --detailed-output
@@ -43,6 +43,8 @@ safety scan --detailed-output
 # 生成报告
 safety scan --save-as json safety-report.json
 ```
+
+> **⚠️ 重要变更**：Safety CLI 3 中 `safety check` 命令已被弃用，将在 2024 年 5 月 1 日后不再支持。请使用 `safety scan` 命令替代。
 
 #### 基础配置文件
 
@@ -89,7 +91,7 @@ proxy_protocol = "http"
 # 基础安全扫描
 safety scan                    # 扫描当前目录
 safety scan --target src/      # 扫描指定目录
-safety check -r requirements.txt  # 扫描 requirements.txt
+safety scan -r requirements.txt  # 扫描 requirements.txt
 
 # 输出格式控制
 safety scan --output screen    # 屏幕输出（默认）
@@ -335,13 +337,13 @@ jobs:
 ```yaml
 # .github/workflows/ci.yml 中的安全检查部分
 - name: Run security check
-  run: safety check || echo "Safety check completed"
+  run: safety scan || echo "Safety scan completed"
 ```
 
 **配置说明**：
 
 - ✅ **本地开发**：使用 `make security` 运行完整的安全检查（包括 Safety）
-- ✅ **CI/CD 环境**：使用 `safety check` 命令，失败时不会阻止 CI/CD 流程
+- ✅ **CI/CD 环境**：使用 `safety scan` 命令，失败时不会阻止 CI/CD 流程
 - ✅ **生产部署**：强制运行完整的安全检查
 
 ## 3. 故障排除与问题解决
@@ -436,7 +438,7 @@ safety scan --severity high               # 只检查高危漏洞
 safety scan --target src/
 
 # 扫描特定文件
-safety check -r requirements.txt
+safety scan -r requirements.txt
 
 # 使用缓存
 safety scan --cache
