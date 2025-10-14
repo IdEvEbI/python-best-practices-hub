@@ -75,6 +75,11 @@ exclude = [
     ".pytest_cache/",
 ]
 
+# 忽略缺少导入的模块
+[[tool.mypy.overrides]]
+module = "pytest"
+ignore_missing_imports = true
+
 # Radon 代码复杂度分析配置
 [tool.radon]
 # 排除的目录
@@ -146,3 +151,18 @@ sort_by_size = true
 
 # 详细输出
 verbose = false
+
+# Bandit 安全扫描配置
+[tool.bandit]
+# 排除的目录
+exclude_dirs = [
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    "__pycache__",
+    ".pytest_cache",
+]
+
+# 跳过测试文件中的 assert 检查
+skips = ["B101"]
