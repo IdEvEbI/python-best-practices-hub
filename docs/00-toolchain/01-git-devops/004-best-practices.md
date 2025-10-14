@@ -104,6 +104,110 @@ cz example
 - ✅ **符合规范的提交**：`feat: add commitizen support` → 验证通过
 - ⚠️ **不符合规范的提交**：`add commitizen support` → 验证失败，提示格式要求
 
+#### Commitizen 配置文件
+
+**`.cz.json` 配置**：
+
+Commitizen 支持独立的 JSON 配置文件，提供更丰富的自定义选项：
+
+```json
+{
+  "path": "cz_conventional_commits",
+  "version": "1.0.0",
+  "tag_format": "v$version",
+  "version_scheme": "pep440",
+  "version_provider": "pep621",
+  "update_changelog_on_bump": true,
+  "major_version_zero": true,
+  "annotated_tag": false,
+  "message_template": "chore(release): version $current_version → $new_version",
+  "commit_message_template": "chore(release): version $current_version → $new_version",
+  "settings": {
+    "name": "cz_conventional_commits",
+    "types": [
+      {
+        "name": "feat",
+        "description": "新功能"
+      },
+      {
+        "name": "fix",
+        "description": "修复问题"
+      },
+      {
+        "name": "docs",
+        "description": "文档更新"
+      },
+      {
+        "name": "style",
+        "description": "代码格式调整"
+      },
+      {
+        "name": "refactor",
+        "description": "代码重构"
+      },
+      {
+        "name": "perf",
+        "description": "性能优化"
+      },
+      {
+        "name": "test",
+        "description": "测试相关"
+      },
+      {
+        "name": "chore",
+        "description": "构建过程或辅助工具的变动"
+      },
+      {
+        "name": "ci",
+        "description": "CI/CD 配置变更"
+      },
+      {
+        "name": "build",
+        "description": "构建系统或外部依赖变更"
+      }
+    ],
+    "scopes": [
+      {
+        "name": "toolchain",
+        "description": "工具链配置"
+      },
+      {
+        "name": "docs",
+        "description": "文档相关"
+      },
+      {
+        "name": "ci",
+        "description": "CI/CD 相关"
+      },
+      {
+        "name": "security",
+        "description": "安全检查"
+      },
+      {
+        "name": "test",
+        "description": "测试相关"
+      }
+    ]
+  }
+}
+```
+
+**配置说明**：
+
+| 配置项             | 作用           | 技术原理     | 预期效果         |
+| ------------------ | -------------- | ------------ | ---------------- |
+| **types**          | 自定义提交类型 | 扩展标准类型 | 支持项目特定需求 |
+| **scopes**         | 自定义作用域   | 限定变更范围 | 提高提交精确性   |
+| **version_scheme** | 版本管理方案   | PEP 440 标准 | 符合 Python 生态 |
+| **tag_format**     | 标签格式       | 语义化版本   | 支持自动化发布   |
+
+**使用效果**：
+
+- ✅ **交互式选择**：`cz commit` 时提供类型和作用域选择菜单
+- ✅ **中文支持**：类型和作用域描述支持中文
+- ✅ **项目定制**：根据项目特点定制提交类型和作用域
+- ✅ **团队协作**：统一的提交规范，提高团队协作效率
+
 ## 2. 分支命名规范
 
 **目的**：通过统一的命名规范，提高分支的可识别性和可管理性，支持自动化工具和团队协作。

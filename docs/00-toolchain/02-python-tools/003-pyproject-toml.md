@@ -285,42 +285,45 @@ my-project/
 
 ### 3.2 企业级配置示例
 
-**完整的 pyproject.toml 配置**：
+**完整的 pyproject.toml 配置**（基于当前项目）：
 
 ```toml
-# pyproject.toml - 企业级 Python 项目配置
+# pyproject.toml - Python 企业级开发者养成计划
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "enterprise-python-app"
+name = "python-best-practices-hub"
 version = "1.0.0"
-description = "企业级 Python 应用程序"
-long-description = "file: README.md"
-long-description-content-type = "text/markdown"
+description = "Python 企业级开发者养成计划"
 authors = [
-    {name = "开发团队", email = "dev-team@company.com"},
+    {name = "Python Best Practices Hub Team", email = "contact@python-best-practices-hub.com"}
 ]
-maintainers = [
-    {name = "维护团队", email = "maintainers@company.com"},
-]
-license = {text = "MIT"}
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+keywords = [
+    "python",
+    "education",
+    "best-practices",
+    "enterprise",
+    "development",
+    "learning",
+    "tutorial"
+]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
+    "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
 ]
 
 # 核心依赖
@@ -388,42 +391,94 @@ enterprise_python_app = ["*.json", "*.yaml", "*.yml", "templates/*"]
 [tool.setuptools.exclude-package-data]
 "*" = ["*.pyc", "*.pyo", "__pycache__", "*.so", "*.dylib"]
 
-# 工具配置示例（简化版）
+# 工具配置示例（基于当前项目实际配置）
+
 [tool.ruff]
 target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    "build",
+    "dist",
+]
 line-length = 88
-select = ["E", "W", "F", "I", "B", "C4", "UP"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
 
 [tool.mypy]
 python_version = "3.12"
 warn_return_any = true
+warn_unused_configs = true
 disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
 
-[tool.pytest.ini_options]
-minversion = "7.0"
-testpaths = ["tests"]
-markers = [
-    "slow: marks tests as slow",
-    "integration: marks tests as integration tests",
+# 排除的目录
+exclude = [
+    "venv/",
+    ".venv/",
+    "build/",
+    "dist/",
+    "__pycache__/",
+    ".pytest_cache/",
 ]
 
-[tool.coverage.run]
-source = ["enterprise_python_app"]
-omit = ["*/tests/*", "*/__pycache__/*"]
+# 忽略缺少导入的模块
+[[tool.mypy.overrides]]
+module = "pytest"
+ignore_missing_imports = true
 
 [tool.bandit]
-exclude_dirs = ["tests", "venv", ".venv"]
+exclude_dirs = [
+    "venv",
+    ".venv",
+    "build",
+    "dist",
+    "__pycache__",
+    ".pytest_cache",
+]
+skips = ["B101"]
 
-[tool.safety]
-config_file = "safety.ini"
-
-[tool.radon]
-cc_threshold = "B"
-mi_threshold = "B"
-
-[tool.vulture]
-ignore = ["venv/", ".venv/", "build/", "dist/"]
-min_confidence = 80
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.0.0"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true
+annotated_tag = false
+message_template = "chore(release): version $current_version → $new_version"
+commit_message_template = "chore(release): version $current_version → $new_version"
 ```
 
 > **注意**：上述配置中的工具配置部分（如 `[tool.ruff]`、`[tool.mypy]` 等）只是示例，具体的配置方法和参数将在各个工具的专门文档中详细介绍。

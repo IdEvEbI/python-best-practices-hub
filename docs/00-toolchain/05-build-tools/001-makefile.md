@@ -71,11 +71,13 @@ install: ## 安装依赖
     pip install --upgrade pip
     pip install pip-tools
     pip-compile requirements.in
-    pip-sync requirements.txt
+    pip-compile requirements-dev.in
+    pip-sync requirements.txt requirements-dev.txt
     pre-commit install
 
 check: ## 运行代码检查
     ruff check .
+    mypy .
 
 format: ## 格式化代码
     ruff format .
@@ -88,7 +90,7 @@ test: ## 运行测试
 
 security: ## 运行安全检查
     bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
-    safety check
+    safety scan
 
 quality: ## 运行代码质量分析
     radon cc . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
@@ -108,8 +110,9 @@ all: check format test security quality ## 运行所有检查
 
 update: ## 更新依赖
     pip-compile --upgrade requirements.in
-    pip-sync requirements.txt
-    npm update
+    pip-compile --upgrade requirements-dev.in
+    pip-sync requirements.txt requirements-dev.txt
+    pnpm update
 
 frontend-setup: ## 安装前端工具
     pnpm install
@@ -160,7 +163,8 @@ install: ## 安装依赖
     pip install --upgrade pip
     pip install pip-tools
     pip-compile requirements.in
-    pip-sync requirements.txt
+    pip-compile requirements-dev.in
+    pip-sync requirements.txt requirements-dev.txt
     pre-commit install
 
 update: ## 更新依赖
@@ -199,7 +203,7 @@ ci: ## CI/CD 检查
     mypy .
     pytest
     bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
-    safety check
+    safety scan
     pnpm run format:check
     pnpm run lint:md
 
@@ -253,7 +257,8 @@ install: ## 安装依赖
     $(PIP) install --upgrade pip
     $(PIP) install pip-tools
     pip-compile requirements.in
-    pip-sync requirements.txt
+    pip-compile requirements-dev.in
+    pip-sync requirements.txt requirements-dev.txt
     pre-commit install
 
 # 检查任务
@@ -301,7 +306,8 @@ endif
     $(PIP) install --upgrade pip
     $(PIP) install pip-tools
     pip-compile requirements.in
-    pip-sync requirements.txt
+    pip-compile requirements-dev.in
+    pip-sync requirements.txt requirements-dev.txt
 ```
 
 ## 3. 工作流程集成
