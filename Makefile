@@ -14,7 +14,8 @@ install: ## 安装依赖
 	pip install --upgrade pip
 	pip install pip-tools
 	pip-compile requirements.in
-	pip-sync requirements.txt
+	pip-compile requirements-dev.in
+	pip-sync requirements.txt requirements-dev.txt
 	pre-commit install
 
 check: ## 运行代码检查

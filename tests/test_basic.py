@@ -4,9 +4,15 @@ Python 企业级开发者养成计划 - 基础测试
 这个文件包含项目的基础测试用例，用于 CI/CD 验证。
 """
 
-import pytest
+import os
+import sys
 
-from examples.basic.hello_project import get_project_info, hello_world
+# 添加项目根目录到 Python 路径
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+import pytest  # noqa: E402
+
+from examples.basic.hello_project import get_project_info, hello_world  # noqa: E402
 
 
 class TestHelloProject:
