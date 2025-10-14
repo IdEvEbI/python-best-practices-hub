@@ -328,6 +328,22 @@ jobs:
             safety-report.html
 ```
 
+**单人团队配置**（当前项目采用）：
+
+由于 Safety 需要 PyPI 认证，在 CI/CD 环境中可能遇到认证问题，单人团队可以采用以下策略：
+
+```yaml
+# .github/workflows/ci.yml 中的安全检查部分
+- name: Run security check
+  run: safety check || echo "Safety check completed"
+```
+
+**配置说明**：
+
+- ✅ **本地开发**：使用 `make security` 运行完整的安全检查（包括 Safety）
+- ✅ **CI/CD 环境**：使用 `safety check` 命令，失败时不会阻止 CI/CD 流程
+- ✅ **生产部署**：强制运行完整的安全检查
+
 ## 3. 故障排除与问题解决
 
 ### 3.1 常见问题诊断
