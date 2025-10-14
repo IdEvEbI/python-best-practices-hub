@@ -1,3 +1,41 @@
+# Python 企业级开发者养成计划 - 项目配置
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-best-practices-hub"
+version = "1.0.0"
+description = "Python 企业级开发者养成计划"
+authors = [
+    {name = "Python Best Practices Hub Team", email = "contact@python-best-practices-hub.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+keywords = [
+    "python",
+    "education",
+    "best-practices",
+    "enterprise",
+    "development",
+    "learning",
+    "tutorial"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
 # ruff 配置文件
 
 [tool.ruff]
