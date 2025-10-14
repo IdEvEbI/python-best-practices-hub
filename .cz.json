@@ -1,0 +1,79 @@
+{
+  "path": "cz_conventional_commits",
+  "version": "1.0.0",
+  "tag_format": "v$version",
+  "version_scheme": "pep440",
+  "version_provider": "pep621",
+  "update_changelog_on_bump": true,
+  "major_version_zero": true,
+  "annotated_tag": false,
+  "message_template": "chore(release): version $current_version → $new_version",
+  "commit_message_template": "chore(release): version $current_version → $new_version",
+  "settings": {
+    "name": "cz_conventional_commits",
+    "types": [
+      {
+        "name": "feat",
+        "description": "新功能"
+      },
+      {
+        "name": "fix",
+        "description": "修复问题"
+      },
+      {
+        "name": "docs",
+        "description": "文档更新"
+      },
+      {
+        "name": "style",
+        "description": "代码格式调整"
+      },
+      {
+        "name": "refactor",
+        "description": "代码重构"
+      },
+      {
+        "name": "perf",
+        "description": "性能优化"
+      },
+      {
+        "name": "test",
+        "description": "测试相关"
+      },
+      {
+        "name": "chore",
+        "description": "构建过程或辅助工具的变动"
+      },
+      {
+        "name": "ci",
+        "description": "CI/CD 配置变更"
+      },
+      {
+        "name": "build",
+        "description": "构建系统或外部依赖变更"
+      }
+    ],
+    "scopes": [
+      {
+        "name": "toolchain",
+        "description": "工具链配置"
+      },
+      {
+        "name": "docs",
+        "description": "文档相关"
+      },
+      {
+        "name": "ci",
+        "description": "CI/CD 相关"
+      },
+      {
+        "name": "security",
+        "description": "安全检查"
+      },
+      {
+        "name": "test",
+        "description": "测试相关"
+      }
+    ]
+  }
+}

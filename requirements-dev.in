@@ -1,0 +1,37 @@
+# Python 项目开发依赖
+
+# 基础依赖
+-r requirements.txt
+
+# 代码检查和格式化（开发工具）
+ruff>=0.1.0
+
+# 类型检查（开发工具）
+mypy>=1.0.0
+
+# Git 提交钩子（开发工具）
+pre-commit>=3.0.0
+
+# 开发工具
+jupyter>=1.0.0
+ipython>=8.0.0
+
+# 调试工具
+pdbpp>=0.10.0
+
+# 性能分析
+memory-profiler>=0.60.0
+line-profiler>=4.0.0
+
+# 文档工具
+sphinx>=6.0.0
+sphinx-rtd-theme>=1.0.0
+
+# 代码质量
+bandit>=1.7.0
+safety>=2.0.0
+
+# 提交消息规范
+commitizen>=4.0.0
+radon>=6.0.0
+vulture>=2.14
