@@ -31,8 +31,8 @@ pip install bandit
 # 检查单个文件
 bandit script.py
 
-# 检查整个项目
-bandit -r .
+# 检查整个项目（当前项目配置）
+bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
 
 # 检查特定目录
 bandit -r src/
@@ -57,78 +57,10 @@ exclude_dirs = [
     "dist",
     "__pycache__",
     ".pytest_cache",
-    "tests",
 ]
 
-# 排除的文件
-exclude = [
-    "*/tests/*",
-    "*/test_*.py",
-    "*/__pycache__/*",
-]
-
-# 严重级别过滤
-severity = "medium"
-
-# 置信度过滤
-confidence = "medium"
-
-# 跳过的测试
-skip = [
-    "B101",  # assert_used
-    "B601",  # shell_injection_subprocess
-]
-
-# 包含的测试
-tests = [
-    "B201",  # flask_debug_true
-    "B301",  # pickle
-    "B302",  # marshal
-    "B303",  # md5
-    "B304",  # cipher
-    "B305",  # cipher_mode
-    "B306",  # mktemp_q
-    "B307",  # eval
-    "B308",  # mark_safe
-    "B309",  # httpsconnection
-    "B310",  # urllib_urlopen
-    "B311",  # random
-    "B312",  # telnetlib
-    "B313",  # xml_bad_cElementTree
-    "B314",  # xml_bad_ElementTree
-    "B315",  # xml_bad_expatreader
-    "B316",  # xml_bad_sax
-    "B317",  # xml_bad_minidom
-    "B318",  # xml_bad_pulldom
-    "B319",  # xml_bad_etree
-    "B320",  # xml_bad_lxml
-    "B321",  # ftplib
-    "B322",  # input
-    "B323",  # unverified_context
-    "B324",  # hashlib_new_insecure_functions
-    "B325",  # tempnam
-    "B501",  # request_with_no_cert_validation
-    "B502",  # ssl_with_bad_version
-    "B503",  # ssl_with_bad_defaults
-    "B504",  # ssl_with_no_version
-    "B505",  # weak_cryptographic_key
-    "B506",  # yaml_load
-    "B507",  # ssh_no_host_key_verification
-    "B601",  # shell_injection_subprocess
-    "B602",  # subprocess_popen_with_shell_equals_true
-    "B603",  # subprocess_without_shell_equals_true
-    "B604",  # any_other_function_with_shell_equals_true
-    "B605",  # start_process_with_a_shell
-    "B606",  # start_process_with_no_shell
-    "B607",  # start_process_with_partial_path
-    "B608",  # hardcoded_sql_expressions
-    "B609",  # linux_commands_wildcard_injection
-    "B610",  # django_extra_used
-    "B611",  # django_rawsql_used
-    "B701",  # jinja2_autoescape_false
-    "B702",  # use_of_mako_templates
-    "B703",  # django_mark_safe
-]
+# 跳过测试文件中的 assert 检查
+skips = ["B101"]
 ```
 
 ### 1.2 核心命令与工作流程
@@ -138,8 +70,8 @@ tests = [
 #### 安全检查命令
 
 ```bash
-# 基础安全检查
-bandit -r .                    # 递归检查当前目录
+# 基础安全检查（当前项目配置）
+bandit -r . --exclude ./venv --exclude ./.venv --exclude ./node_modules --exclude ./.pytest_cache
 bandit -r src/                 # 检查指定目录
 bandit script.py               # 检查单个文件
 
