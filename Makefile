@@ -53,7 +53,8 @@ all: check format test security quality ## 运行所有检查
 
 update: ## 更新依赖
 	pip-compile --upgrade requirements.in
-	pip-sync requirements.txt
+	pip-compile --upgrade requirements-dev.in
+	pip-sync requirements.txt requirements-dev.txt
 	pnpm update
 
 frontend-setup: ## 安装前端工具
