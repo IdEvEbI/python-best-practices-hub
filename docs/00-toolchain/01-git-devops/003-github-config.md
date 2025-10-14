@@ -42,16 +42,33 @@
 | **Require linear history**                | 线性历史要求 | 防止复杂合并     | 简化历史追踪   |
 | **Do not allow bypassing**                | 权限限制     | 防止绕过保护     | 强制执行规则   |
 
-### 2.2 Develop 分支保护规则
+### 2.3 单人团队配置（特殊场景）
 
-| 规则                                      | 技术原理     | 解决的问题     | 预期效果       |
-| ----------------------------------------- | ------------ | -------------- | -------------- |
-| **Require a pull request before merging** | 强制 PR 流程 | 防止直接推送   | 确保代码审查   |
-| **Require approvals**                     | 人工审查机制 | 防止明显错误   | 提高代码质量   |
-| **Require conversation resolution**       | 讨论解决机制 | 防止未解决问题 | 确保问题解决   |
-| **Require signed commits**                | GPG 签名验证 | 防止身份伪造   | 确保提交真实性 |
-| **Require linear history**                | 线性历史要求 | 防止复杂合并   | 简化历史追踪   |
-| **Do not allow bypassing**                | 权限限制     | 防止绕过保护   | 强制执行规则   |
+**适用场景**：团队只有一个人，无法进行代码审查的情况。
+
+**调整策略**：
+
+| 规则                                      | 单人团队设置 | 技术原理         | 预期效果         |
+| ----------------------------------------- | ------------ | ---------------- | ---------------- |
+| **Require a pull request before merging** | ✅ 保留      | 强制 PR 流程     | 保持代码历史清晰 |
+| **Require approvals**                     | ❌ 取消      | 避免自我审查限制 | 允许单人合并     |
+| **Require conversation resolution**       | ❌ 取消      | 避免评论解决限制 | 允许直接合并     |
+| **Require signed commits**                | ❌ 取消      | 避免签名验证限制 | 允许普通提交     |
+| **Require linear history**                | ✅ 保留      | 线性历史要求     | 简化历史追踪     |
+| **Do not allow bypassing**                | ✅ 保留      | 权限限制         | 强制执行规则     |
+
+**配置步骤**：
+
+1. 进入 GitHub 仓库 **Settings** → **Branches**
+2. 编辑 `main` 和 `develop` 分支保护规则
+3. 取消勾选：Require approvals、Require conversation resolution、Require signed commits
+4. 保留勾选：Require a pull request before merging、Require status checks to pass before merging
+
+**注意事项**：
+
+- ⚠️ **质量保证**：虽然取消人工审查，但 CI/CD 检查仍然强制执行
+- ⚠️ **团队扩展**：当团队扩展时，建议重新启用审查要求
+- ⚠️ **代码质量**：依赖自动化检查确保代码质量
 
 ## 3. Pull Request 模板
 
